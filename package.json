@@ -1,0 +1,48 @@
+{
+	"name": "node-js-dependency-viewer",
+	"displayName": "Node.js Dependency Viewer",
+	"description": "Node.js dependency viewer for Node projects",
+	"version": "1.0.1",
+	"publisher": "aslamanver",
+	"repository": "https://github.com/aslamanver/node-js-dependency-viewer",
+	"license": "MIT",
+	"icon": "resources/icon.png",
+	"keywords": [
+		"node-js-dependency-viewer"
+	],
+	"engines": {
+		"vscode": "^1.42.0"
+	},
+	"categories": [
+		"Other",
+		"Programming Languages"
+	],
+	"activationEvents": [
+		"onCommand:extension.node-js-dependency-viewer"
+	],
+	"main": "src/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "extension.node-js-dependency-viewer",
+				"title": "Node.js Dependency Viewer"
+			}
+		]
+	},
+	"scripts": {
+		"lint": "eslint .",
+		"pretest": "npm run lint",
+		"test": "node_modules/mocha/bin/mocha ./test/tests.js"
+	},
+	"devDependencies": {
+		"@types/glob": "^7.1.1",
+		"@types/mocha": "^7.0.1",
+		"@types/node": "^12.11.7",
+		"@types/vscode": "^1.42.0",
+		"eslint": "^6.8.0",
+		"glob": "^7.1.6",
+		"mocha": "^7.0.1",
+		"typescript": "^3.7.5",
+		"vscode-test": "^1.3.0"
+	}
+}
