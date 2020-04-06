@@ -1,5 +1,6 @@
 const path = require('path');
 const vscode = require('vscode');
+const fs = require('fs');
 
 const terminal = vscode.window.createTerminal(`Node.js Dependencies`);
 
@@ -15,12 +16,20 @@ function activate(context) {
 
 	console.log('Congratulations, your extension "node-js-dependency-manager" is now active!');
 
+	welcomeAction();
+
 	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 	statusBarItem.command = 'extension.node-js-dependency-manager';
 	statusBarItem.text = "$(zap) Node.js Dependencies";
+	statusBarItem.tooltip = 'Open Node.js dependencies manager from package.json file';
 	statusBarItem.show();
 
 	let command = vscode.commands.registerCommand('extension.node-js-dependency-manager', function () {
+
+		if (!fs.existsSync(path.join(vscode.workspace.rootPath, 'package.json'))) {
+			vscode.window.showErrorMessage('package.json file does not exist in this directory!');
+			return;
+		}
 
 		if (isVisible) return;
 
@@ -56,8 +65,39 @@ function activate(context) {
 		})
 	});
 
+	// context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {
+	// 	statusBarItem.show();
+	// }));
+
 	context.subscriptions.push(statusBarItem);
 	context.subscriptions.push(command);
+}
+
+function welcomeAction() {
+
+	const globalStorage = mContext.globalStoragePath;
+	const welcomePath = path.join(mContext.globalStoragePath, 'welcome')
+
+	fs.exists(welcomePath, (e) => {
+		if (!e) {
+			vscode.window.showInformationMessage('You can now manage Node.js dependencies through extension')
+			vscode.commands.executeCommand('extension.node-js-dependency-manager');
+			fs.exists(globalStorage, exists => {
+				if (!exists) {
+					fs.mkdir(globalStorage, (err) => {
+						if (err) throw err;
+						fs.writeFile(welcomePath, 1, (err) => {
+							if (err) throw err;
+						});
+					});
+				} else {
+					fs.writeFile(welcomePath, 1, (err) => {
+						if (err) throw err;
+					});
+				}
+			});
+		}
+	})
 }
 
 exports.activate = activate;

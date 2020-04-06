@@ -18,7 +18,7 @@
 		"Programming Languages"
 	],
 	"activationEvents": [
-		"onCommand:extension.node-js-dependency-manager"
+		"*"
 	],
 	"main": "src/extension.js",
 	"contributes": {
