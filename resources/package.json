@@ -1,14 +1,14 @@
 {
-	"name": "node-js-dependency-manager",
-	"displayName": "Node.js Dependency Manager",
-	"description": "Node.js dependency manager for Node projects",
+	"name": "node-js-dependency-viewer",
+	"displayName": "Node.js Dependency Viewer",
+	"description": "Node.js dependency viewer for Node projects",
 	"version": "1.0.1",
 	"publisher": "aslamanver",
-	"repository": "https://github.com/aslamanver/node-js-dependency-manager",
+	"repository": "https://github.com/aslamanver/node-js-dependency-viewer",
 	"license": "MIT",
 	"icon": "resources/icon.png",
 	"keywords": [
-		"node-js-dependency-manager"
+		"node-js-dependency-viewer"
 	],
 	"engines": {
 		"vscode": "^1.42.0"
@@ -18,32 +18,24 @@
 		"Programming Languages"
 	],
 	"activationEvents": [
-		"onCommand:extension.node-js-dependency-manager"
+		"onCommand:extension.node-js-dependency-viewer"
 	],
 	"main": "src/extension.js",
 	"contributes": {
 		"commands": [
 			{
-				"command": "extension.node-js-dependency-manager",
-				"title": "Node.js Dependency Manager"
+				"command": "extension.node-js-dependency-viewer",
+				"title": "Node.js Dependency Viewer"
 			}
-		],
-		"configuration": {
-			"title": "Node.js Dependency Manager",
-			"properties": {
-				"nodejs-dm.showTerminal": {
-					"type": "boolean",
-					"default": true,
-					"description": "Show terminal when processing.",
-					"scope": "window"
-				}
-			}
-		}
+		]
 	},
 	"scripts": {
 		"lint": "eslint .",
 		"pretest": "npm run lint",
 		"test": "node_modules/mocha/bin/mocha ./test/tests.js"
+	},
+	"dependencies": {
+		"express": "^7.1.1"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",

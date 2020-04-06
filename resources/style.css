@@ -1,0 +1,156 @@
+/*
+font-family: 'Poppins', sans-serif;
+font-family: 'Montserrat', sans-serif; 
+*/
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i,900,900i|Poppins:300,400,500&display=swap");
+
+html,
+body {
+    margin: 0;
+}
+
+body {
+    width: 100%;
+    background: #21252b;
+    color: #fff;
+    margin: 0;
+    font-family: "Montserrat", sans-serif;
+    font-size: 14px;
+}
+
+.flex-h-center {
+    display: flex;
+    justify-content: center;
+}
+
+.body-container {
+    padding-top: 20px;
+    text-align: center;
+    width: 500px;
+}
+
+.dependency-list {
+    margin-top: 20px;
+}
+
+.dependency-card {
+    position: relative;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    text-align: left;
+}
+
+.dependency-card:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dependency-card .version {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+}
+
+.dependency-btn {
+    background: rgba(255, 255, 255, 0.1);
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 2px;
+}
+
+.dependency-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.dependency-btn i {
+    font-size: 17px;
+}
+
+.manage-btns {
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+
+.dependency-description {
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+}
+
+.dependency-description .other-info {
+    margin-top: 10px;
+}
+
+.dependency-search {
+    margin-top: 20px;
+    position: relative;
+}
+
+.dependency-search .dependency-input {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    border: 0;
+    padding: 15px;
+    width: 350px;
+}
+
+.dependency-search-clear-btn {
+    position: absolute;
+    top: 13px;
+    right: 72px;
+    display: none;
+}
+
+.dependency-count {
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.repo-link a {
+    text-decoration: none;
+}
+
+.repo-link {
+    margin-top: 15px;
+}
+
+.sync-btn {
+    background: #ff4081;
+    padding: 10px;
+    cursor: pointer;
+    border: 0;
+    color: #fff;
+    border-radius: 0;
+    padding-left: 30px;
+    position: relative;
+}
+
+.sync-btn:hover {
+    background: rgba(255, 64, 129, 0.9);
+}
+
+.sync-btn:focus {
+    outline: 0;
+}
+
+.sync-btn i {
+    font-size: 16px;
+    position: absolute;
+    left: 10px;
+}
+
+.ripple {
+    background-position: center;
+    transition: background 0.7s;
+}
+.ripple:hover {
+    background: rgba(255, 64, 129, 0.9) radial-gradient(circle, transparent 1%, rgba(255, 64, 129, 0.9) 1%)
+        center/15000%;
+}
+.ripple:active {
+    background-color: rgba(255, 64, 129, 0.9);
+    background-size: 100%;
+    transition: background 0s;
+}
