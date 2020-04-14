@@ -115,7 +115,7 @@ function npmFind(e) {
                     version: entry.package.version,
                     description: entry.package.description,
                     repository: entry.package.links.repository,
-                    installed: entry.package.name in dependencies
+                    installed: dependencies.filter(elem => elem.name === entry.package.name).length > 0
                 }))
             })
         })

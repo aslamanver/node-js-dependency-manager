@@ -22,12 +22,7 @@
 	],
 	"main": "src/extension.js",
 	"contributes": {
-		"commands": [
-			{
-				"command": "extension.node-js-dependency-manager",
-				"title": "Node.js Dependency Manager"
-			}
-		],
+		"commands": [],
 		"configuration": {
 			"title": "Node.js Dependency Manager",
 			"properties": {

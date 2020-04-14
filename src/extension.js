@@ -62,6 +62,7 @@ function activate(context) {
 		isVisible = true;
 		mPanel.onDidDispose(() => {
 			isVisible = false;
+			// mPanel.
 		})
 	});
 
@@ -80,7 +81,7 @@ function welcomeAction() {
 
 	fs.exists(welcomePath, (e) => {
 		if (!e) {
-			vscode.window.showInformationMessage('You can now manage Node.js dependencies through extension')
+			vscode.window.showInformationMessage('You can now manage Node.js dependencies through Node.js Dependency Manager extension')
 			vscode.commands.executeCommand('extension.node-js-dependency-manager');
 			fs.exists(globalStorage, exists => {
 				if (!exists) {
