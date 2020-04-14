@@ -8,6 +8,12 @@
 	"license": "MIT",
 	"icon": "resources/icon.png",
 	"keywords": [
+		"node dependency manager",
+		"node dependency viewer",
+		"dependency manager",
+		"dependency viewer",
+		"node.js dependency manager",
+		"node.js dependency viewer",
 		"node-js-dependency-manager"
 	],
 	"engines": {
