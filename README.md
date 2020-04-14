@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/aslamanver/node-js-dependency-manager.svg?branch=master)](https://travis-ci.com/aslamanver/node-js-dependency-manager)
 
 #### Just click the button and start
-[![Button](https://i.imgur.com/bf2HjY1.png)]()
+[![Button](https://i.imgur.com/bf2HjY1.png)](#)
 
 Node.js Dependency Manager helps you to view and manage your Node.js dependencies through an awesome GUI panel where you can install and uninstall packages in a simple click.
 
