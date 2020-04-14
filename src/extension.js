@@ -62,8 +62,7 @@ function activate(context) {
 		isVisible = true;
 		mPanel.onDidDispose(() => {
 			isVisible = false;
-			// mPanel.
-		})
+		});
 	});
 
 	// context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {

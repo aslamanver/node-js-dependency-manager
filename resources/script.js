@@ -20,8 +20,8 @@ const cardHTML = (data) => `
         ${ data.repository !== undefined ? '<div class="repo-link"><a href="' + data.repository + '">Repository</a></div>' : ''}
 
         <div class="other-info">
-            <img src="https://img.shields.io/npm/dm/${data.name}.svg" />
-            <img src="https://img.shields.io/npm/v/${data.name}.svg">
+            <img onerror="this.style.display='none'" src="https://img.shields.io/npm/dm/${data.name}.svg" />
+            <img onerror="this.style.display='none'" src="https://img.shields.io/npm/v/${data.name}.svg">
         </div>
     </div>
 
