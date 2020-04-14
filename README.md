@@ -7,7 +7,7 @@
 
 Node.js Dependency Manager helps you to view and manage your Node.js dependencies through an awesome GUI panel where you can install and uninstall packages in a simple click.
 
-[![Screenshot](screenshot.gif)]()
+[![Screenshot](screenshot.gif)](#)
 
 ## Requirements
 
