@@ -2,7 +2,7 @@ const path = require('path');
 const vscode = require('vscode');
 const fs = require('fs');
 
-var terminal = vscode.window.createTerminal({ name: `Node.js Dependencies`, hideFromUser: true });
+var terminal = vscode.window.createTerminal({ name: 'Node.js Dependencies', hideFromUser: true });
 
 var configuration = name => vscode.workspace.getConfiguration().get(name);
 
@@ -49,12 +49,10 @@ function activate(context) {
 					mPanel.title = 'Node.js Dependency Manager'
 					return;
 				case 'add':
-					reCreateTerminal();
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
 					terminal.sendText('npm install -s ' + message.text);
 					return;
 				case 'remove':
-					reCreateTerminal();
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
 					terminal.sendText('npm uninstall ' + message.text);
 					return;
@@ -65,6 +63,12 @@ function activate(context) {
 		mPanel.onDidDispose(() => {
 			isVisible = false;
 		});
+
+		vscode.window.onDidCloseTerminal((t) => {
+			if(t.name === 'Node.js Dependencies') {
+				terminal = vscode.window.createTerminal({ name: 'Node.js Dependencies', hideFromUser: true });
+			}
+		});
 	});
 
 	// context.subscriptions.push(vscode.window.onDidChangeActiveTextEditor(() => {
@@ -73,11 +77,6 @@ function activate(context) {
 
 	context.subscriptions.push(statusBarItem);
 	context.subscriptions.push(command);
-}
-
-function reCreateTerminal() {
-	terminal.dispose();
-	terminal = vscode.window.createTerminal({ name: `Node.js Dependencies`, hideFromUser: true });
 }
 
 function welcomeAction() {
