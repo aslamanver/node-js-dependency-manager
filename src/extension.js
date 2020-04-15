@@ -2,7 +2,7 @@ const path = require('path');
 const vscode = require('vscode');
 const fs = require('fs');
 
-const terminal = vscode.window.createTerminal(`Node.js Dependencies`);
+var terminal = vscode.window.createTerminal({ name: `Node.js Dependencies`, hideFromUser: true });
 
 var configuration = name => vscode.workspace.getConfiguration().get(name);
 
@@ -49,10 +49,12 @@ function activate(context) {
 					mPanel.title = 'Node.js Dependency Manager'
 					return;
 				case 'add':
+					reCreateTerminal();
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
 					terminal.sendText('npm install -s ' + message.text);
 					return;
 				case 'remove':
+					reCreateTerminal();
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
 					terminal.sendText('npm uninstall ' + message.text);
 					return;
@@ -71,6 +73,11 @@ function activate(context) {
 
 	context.subscriptions.push(statusBarItem);
 	context.subscriptions.push(command);
+}
+
+function reCreateTerminal() {
+	terminal.dispose();
+	terminal = vscode.window.createTerminal({ name: `Node.js Dependencies`, hideFromUser: true });
 }
 
 function welcomeAction() {
