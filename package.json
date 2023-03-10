@@ -17,7 +17,7 @@
 		"node-js-dependency-manager"
 	],
 	"engines": {
-		"vscode": "^1.42.0"
+		"vscode": "^1.74.0"
 	},
 	"categories": [
 		"Other",
@@ -26,7 +26,7 @@
 	"activationEvents": [
 		"*"
 	],
-	"main": "src/extension.js",
+	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [],
 		"configuration": {
@@ -42,19 +42,25 @@
 		}
 	},
 	"scripts": {
-		"lint": "eslint .",
 		"pretest": "npm run lint",
-		"test": "mocha test/tests.js"
+		"test": "mocha test/tests.js",
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc -p ./",
+		"lint": "eslint \"src/**/*.ts\"",
+		"watch": "tsc -w -p ./"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.1.1",
 		"@types/mocha": "^7.0.1",
-		"@types/node": "^12.11.7",
-		"@types/vscode": "^1.42.0",
-		"eslint": "^6.8.0",
 		"glob": "^7.1.6",
 		"mocha": "^7.0.1",
-		"typescript": "^3.7.5",
-		"vscode-test": "^1.3.0"
+		"vscode-test": "^1.3.0",
+		"@types/node": "^16.11.7",
+		"@types/vscode": "^1.73.0",
+		"@types/vscode-webview": "^1.57.0",
+		"@typescript-eslint/eslint-plugin": "^5.42.0",
+		"@typescript-eslint/parser": "^5.42.0",
+		"eslint": "^8.26.0",
+		"typescript": "^4.9.4"
 	}
 }

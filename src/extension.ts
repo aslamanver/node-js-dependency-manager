@@ -1,16 +1,16 @@
-const path = require('path');
-const vscode = require('vscode');
-const fs = require('fs');
+import * as fs from 'fs';
+import * as path from 'path';
+import * as vscode from 'vscode';
 
-var terminal = vscode.window.createTerminal({ name: 'Node.js Dependencies', hideFromUser: true });
+let terminal: any = vscode.window.createTerminal({ name: 'Node.js Dependencies', hideFromUser: true });
 
-var configuration = name => vscode.workspace.getConfiguration().get(name);
+const configuration = (name: string) => vscode.workspace.getConfiguration().get(name);
 
-var mContext = null;
-var mPanel = null;
-var isVisible = false;
+let mContext: vscode.ExtensionContext;
+let mPanel: vscode.WebviewPanel;
+let isVisible = false;
 
-function activate(context) {
+export function activate(context: vscode.ExtensionContext) {
 
 	mContext = context;
 
@@ -18,15 +18,15 @@ function activate(context) {
 
 	welcomeAction();
 
-	let statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	const statusBarItem: any = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
 	statusBarItem.command = 'extension.node-js-dependency-manager';
 	statusBarItem.text = "$(zap) Node.js Dependencies";
 	statusBarItem.tooltip = 'Open Node.js dependencies manager from package.json file';
 	statusBarItem.show();
 
-	let command = vscode.commands.registerCommand('extension.node-js-dependency-manager', function () {
+	const command: any = vscode.commands.registerCommand('extension.node-js-dependency-manager', function () {
 
-		if (!fs.existsSync(path.join(vscode.workspace.rootPath, 'package.json'))) {
+		if (!fs.existsSync(path.join(`${vscode.workspace.rootPath}`, 'package.json'))) {
 			vscode.window.showErrorMessage('package.json file does not exist in this directory!');
 			return;
 		}
@@ -37,7 +37,7 @@ function activate(context) {
 			enableScripts: true,
 			localResourceRoots: [
 				vscode.Uri.file(path.join(context.extensionPath, 'resources')),
-				vscode.Uri.file(vscode.workspace.rootPath)
+				vscode.Uri.file(`${vscode.workspace.rootPath}`)
 			]
 		});
 
@@ -46,7 +46,7 @@ function activate(context) {
 		mPanel.webview.onDidReceiveMessage((message) => {
 			switch (message.command) {
 				case 'loaded':
-					mPanel.title = 'Node.js Dependency Manager'
+					mPanel.title = 'Node.js Dependency Manager';
 					return;
 				case 'add':
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
@@ -55,6 +55,10 @@ function activate(context) {
 				case 'remove':
 					if (configuration('nodejs-dm.showTerminal')) terminal.show();
 					terminal.sendText('npm uninstall ' + message.text);
+					return;
+				case 'npminstall':
+					if (configuration('nodejs-dm.showTerminal')) terminal.show();
+					terminal.sendText('npm install ' + message.text);
 					return;
 			}
 		});
@@ -65,7 +69,7 @@ function activate(context) {
 		});
 
 		vscode.window.onDidCloseTerminal((t) => {
-			if(t.name === 'Node.js Dependencies') {
+			if (t.name === 'Node.js Dependencies') {
 				terminal = vscode.window.createTerminal({ name: 'Node.js Dependencies', hideFromUser: true });
 			}
 		});
@@ -82,34 +86,33 @@ function activate(context) {
 function welcomeAction() {
 
 	const globalStorage = mContext.globalStoragePath;
-	const welcomePath = path.join(mContext.globalStoragePath, 'welcome')
+	const welcomePath = path.join(mContext.globalStoragePath, 'welcome');
 
 	fs.exists(welcomePath, (e) => {
 		if (!e) {
-			vscode.window.showInformationMessage('You can now manage Node.js dependencies through Node.js Dependency Manager extension')
+			vscode.window.showInformationMessage('You can now manage Node.js dependencies through Node.js Dependency Manager extension');
 			vscode.commands.executeCommand('extension.node-js-dependency-manager');
 			fs.exists(globalStorage, exists => {
 				if (!exists) {
 					fs.mkdir(globalStorage, (err) => {
 						if (err) throw err;
-						fs.writeFile(welcomePath, 1, (err) => {
+						fs.writeFile(welcomePath, "1", (err) => {
 							if (err) throw err;
 						});
 					});
 				} else {
-					fs.writeFile(welcomePath, 1, (err) => {
+					fs.writeFile(welcomePath, "1", (err) => {
 						if (err) throw err;
 					});
 				}
 			});
 		}
-	})
+	});
 }
 
-exports.activate = activate;
-
-function deactivate() { }
-
+export function deactivate() {
+	//
+}
 
 function addHTML() {
 
@@ -148,6 +151,10 @@ function addHTML() {
 		
 					<button onclick="clearSearch()" class="sync-btn ripple">
 						<i class="material-icons">sync</i> SYNC
+					</button>
+
+					<button onclick="npmInstall()" class="sync-btn ripple">
+						<i class="material-icons">download</i> NPM INSTALL
 					</button>
 		
 					<div class="dependency-search">
@@ -197,7 +204,7 @@ function addHTML() {
 		</html>`;
 }
 
-function getFileUri(name) {
+function getFileUri(name: string) {
 
 	const file = vscode.Uri.file(
 		path.join(mContext.extensionPath, 'resources', name)
@@ -206,16 +213,11 @@ function getFileUri(name) {
 	return mPanel.webview.asWebviewUri(file);
 }
 
-function getHostFileUri(name) {
+function getHostFileUri(name: string) {
 
 	const file = vscode.Uri.file(
-		path.join(vscode.workspace.rootPath, name)
+		path.join(`${vscode.workspace.rootPath}`, name)
 	);
 
 	return mPanel.webview.asWebviewUri(file);
-}
-
-module.exports = {
-	activate,
-	deactivate
 }

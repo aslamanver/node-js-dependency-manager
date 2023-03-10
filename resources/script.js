@@ -4,14 +4,14 @@
 
 // const vscode = undefined
 const vscode = acquireVsCodeApi()
-var packageJsonUri = ''
-var dependencies = []
-var processDependencies = []
+let packageJsonUri = ''
+let dependencies = []
+let processDependencies = []
 
 const cardHTML = (data) => `
 <div class="dependency-card">
 
-    ${data.name} <span class="version">${data.version} ${data.installed ? '- Installed' : ''}</span>
+    ${data.name} <span class="version">${data.version} ${data.installed ? '- Installed' : ''} ${data.localstatus ? ' - Locally installed' : ' - Not locally installed'}</span>
 
     <div class="dependency-description">
         
@@ -51,13 +51,23 @@ function packageJSON() {
         $('#dependency-count').html(`${dependencies.length} dependencies`)
 
         dependencies.forEach((data) => {
-            $('#dependency-list').append(cardHTML({
-                name: data.name,
-                version: data.version,
-                description: '',
-                repository: undefined,
-                installed: true
-            }))
+
+            const append = (localstatus) => {
+                $('#dependency-list').append(cardHTML({
+                    name: data.name,
+                    version: data.version,
+                    description: '',
+                    repository: undefined,
+                    installed: true,
+                    localstatus: localstatus
+                }))
+            }
+
+            $.get(packageJsonUri.replace('package.json', 'node_modules/' + data.name + '/package.json'), (data2, status2) => {
+                append(true)
+            }).fail(() => {
+                append(false)
+            });
         })
 
         sendVSCode('loaded', 'Document loaded to DOM')
@@ -95,6 +105,10 @@ function clearSearch() {
     packageJSON()
 }
 
+function npmInstall(package = '') {
+    sendVSCode('npminstall', package)
+}
+
 function npmFind(e) {
 
     let query = e.value
@@ -110,13 +124,23 @@ function npmFind(e) {
             $('#dependency-count').html(`${data.objects.length} dependencies`)
 
             data.objects.forEach(entry => {
-                $('#dependency-list').append(cardHTML({
-                    name: entry.package.name,
-                    version: entry.package.version,
-                    description: entry.package.description,
-                    repository: entry.package.links.repository,
-                    installed: dependencies.filter(elem => elem.name === entry.package.name).length > 0
-                }))
+
+                const append = (localstatus) => {
+                    $('#dependency-list').append(cardHTML({
+                        name: entry.package.name,
+                        version: entry.package.version,
+                        description: entry.package.description,
+                        repository: entry.package.links.repository,
+                        installed: dependencies.filter(elem => elem.name === entry.package.name).length > 0,
+                        localstatus: localstatus
+                    }))
+                }
+
+                $.get(packageJsonUri.replace('package.json', 'node_modules/' + entry.package.name + '/package.json'), (data2, status2) => {
+                    append(true)
+                }).fail(() => {
+                    append(false)
+                });
             })
         })
 
